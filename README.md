@@ -34,7 +34,7 @@ pip install -r requirements.txt
 
 ## How to Run
 
-1. Add your OpenAI key in `main.py`:
+1. Add your OpenAI key in `url_detector`:
 
    ```python
    client = OpenAI(api_key="your-openai-api-key")
@@ -43,13 +43,13 @@ pip install -r requirements.txt
 2. Run on a sample email:
 
    ```bash
-   python main.py
+   python url_detector
    ```
 
 3. Run unit tests:
 
    ```bash
-   python -m unittest main.py
+   python -m unittest url_detector
    ```
 
 ## Sample Output
@@ -71,7 +71,7 @@ pip install -r requirements.txt
 
 ## Files
 
-* `main.py` — Core pipeline, feature extraction, prompt building, GPT-4 classification, and tests
+* `url_detector.py` — Core pipeline, feature extraction, prompt building, GPT-4 classification, and tests
 * `requirements.txt` — Required dependencies
 
 ## Notes
