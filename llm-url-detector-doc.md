@@ -16,7 +16,7 @@ I needed to build a system that:
 1. Finds potential phishing URLs in structured or unstructured emails.
 2. Labels each link as malicious or safe.
 3. Returns a clear JSON output with results.
-4. Includes a fallback or confidence score if there’s uncertainty.
+4. Includes a confidence score if there’s uncertainty.
 5. Stays within a 1500-token LLM limit.
 6. Uses smart tools like WHOIS, link unshortening, or pattern checks when needed.
 
@@ -70,7 +70,7 @@ re.findall(r'(https?://[\w./\-]+)', text)
 
 ---
 
-## Feature Extraction + Context Optimization (Exercise 1.5)
+## Feature Extraction + Context Optimization
 
 ### Key Features I Used:
 
@@ -118,10 +118,6 @@ They’re simple, take little space in the LLM prompt, and still give good signa
 
 If any of these steps fail, the app doesn’t crash. It just marks the output as unknown or uses the best info available.
 
-### Why Not More Tools?
-
-I wanted to keep it practical. This is what I would build in a real early-stage startup with limited time and money.
-
 ---
 
 ## Traditional ML + LLM (Optional)
@@ -133,20 +129,6 @@ Here’s what I could add later:
 - A basic ML model (like logistic regression) to pre-filter links
 - Only send confusing cases to GPT-4 to save cost
 - This could help scale the system later on
-
----
-
-## CI/CD Strategy
-
-### What I Did:
-
-- Added basic logging
-- Wrote test cases using `unittest`
-
-### What I’d Do Next:
-
-- Add GitHub Actions to run tests automatically
-- Add test coverage checks
 
 ---
 

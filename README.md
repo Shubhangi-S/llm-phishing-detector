@@ -1,56 +1,51 @@
-# llm-phishing-detector
+# Malicious URL Detector
 
-````markdown
-# Malicious URL Detector (LLM + Heuristics)
+**Built by Shubhangi Singhal**
 
-Built by Shubhangi Singhal
-
-This project detects malicious URLs in raw email or text content using basic heuristics and GPT-4 for classification. It’s written to be simple, testable, and cost-aware, without unnecessary complexity.
+This is a simple tool I built to check if URLs in emails or text messages might be dangerous (like phishing links). It uses a mix of basic rules (heuristics) and GPT-4 to make a decision for each link.
 
 ## What It Does
 
-- Extracts all URLs from unstructured or structured email/text input
-- Unshortens URLs and extracts basic risk signals (IP-based domains, keywords, encoded characters, etc.)
-- Sends a structured prompt to GPT-4 to classify each URL as `malicious`, `safe`, or `unknown`
-- Returns structured JSON output
-- Includes logging and test cases for common input patterns
+- Finds all URLs in raw text or email content  
+- Expands shortened links to see where they really go  
+- Looks at each link to find warning signs (like weird characters or IP addresses)  
+- Sends a clean summary of each link to GPT-4 to label it as `malicious`, `safe`, or `unknown`  
+- Returns easy-to-read JSON results  
+- Includes unit tests
 
 ## Why I Built It This Way
 
-- Heuristics are fast and free — used to filter noise before hitting GPT-4
-- GPT-4 helps reason over ambiguous or edge-case URLs
-- Testable, debuggable, and runs locally with no external dependencies beyond OpenAI + basic libraries
+- Basic rules are fast and don’t cost anything  
+- GPT-4 is used only when needed — to make smarter decisions on tricky links  
+- Everything runs locally with just a few libraries — no big setup required  
+- Easy to test, update, and expand  
 
 ## Requirements
 
-- Python 3.10+
-- OpenAI Python SDK (`openai>=1.0.0`)
-- `requests`, `tldextract`
+- Python 3.10+  
+- `openai>=1.0.0`, `requests`, `tldextract`
 
-Install dependencies:
+To install everything:
 ```bash
 pip install -r requirements.txt
-````
+```
 
-## How to Run
+## How to Run It
 
-1. Add your OpenAI key in `url_detector`:
+1. Add your OpenAI key in `url_detector.py` like this:
+```python
+client = OpenAI(api_key="your-api-key-here")
+```
 
-   ```python
-   client = OpenAI(api_key="your-openai-api-key")
-   ```
+2. Run on a sample message:
+```bash
+python url_detector.py
+```
 
-2. Run on a sample email:
-
-   ```bash
-   python url_detector
-   ```
-
-3. Run unit tests:
-
-   ```bash
-   python -m unittest url_detector
-   ```
+3. Run tests:
+```bash
+python -m unittest url_detector
+```
 
 ## Sample Output
 
@@ -71,19 +66,24 @@ pip install -r requirements.txt
 
 ## Files
 
-* `url_detector.py` — Core pipeline, feature extraction, prompt building, GPT-4 classification, and tests
-* `requirements.txt` — Required dependencies
+- `url_detector.py` – Main logic (extraction, prompt building, GPT-4 call, and tests)  
+- `requirements.txt` – List of needed libraries  
+- `url_detector.ipynb` – Jupyter notebook version for experimenting or demoing locally  
+- `llm-url-detector-doc.md` – Full design and scope document explaining the approach and trade-offs  
+- `LICENSE` – Standard open-source license file  
+- `README.md` – This project readme  
+- `.gitignore` – Standard Git ignore rules for Python + Jupyter projects  
 
 ## Notes
 
-* Context size is capped at 1500 tokens for cost control
-* The prompt to GPT-4 is concise and focused on extracted features
-* Error handling and logging included for debugging
-* Safe to run locally on CPU
+- Max LLM context is 1500 tokens (keeps cost low)  
+- Prompts sent to GPT-4 are short and focused  
+- Errors are handled clearly, and logs are printed to the console  
+- Runs completely on your local machine — no special setup needed  
 
-## Things I’d Improve with More Time
+## Future Improvements (if I had more time)
 
-* Add support for domain reputation and WHOIS APIs
-* Improve feature set (e.g., TLD category, age of domain)
-* Add caching and rate-limit protection for the LLM
-* Support batch processing from inboxes or files
+- Add WHOIS checks or domain reputation lookups  
+- Extract more features like domain age or top-level domain type  
+- Add caching and rate limiting to better control OpenAI usage  
+- Let it read from files or inboxes automatically  
